@@ -15,11 +15,14 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
+  Divider,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import RoomServiceIcon from "@mui/icons-material/RoomService";
 
 function Header() {
+  const navigate = useNavigate();
   const [value, setValue] = useState();
   const [bar, setBar] = useState(false);
   const theme = useTheme();
@@ -29,20 +32,90 @@ function Header() {
     <Fragment>
       <Box>
         <AppBar>
-          <Toolbar style={{ backgroundColor: "#063970", alignItems: "center" }}>
-            <RoomServiceIcon style={{ color: "#ecf0f1", fontSize: "2.1rem" }} />
-
+          <Toolbar style={{ backgroundColor: "black", alignItems: "center" }}>
+            <RoomServiceIcon style={{ color: "#e67e22", fontSize: "2.8rem" }} />
+            <Typography
+              variant="h2"
+              style={{
+                color: "#e67e22",
+                fontSize: "1.3rem",
+                marginLeft: "1.3rem",
+                fontWeight: 700,
+              }}
+            >
+              My Restaurant
+            </Typography>
             {isMatch ? (
               <Fragment>
-                <Drawer open={bar} onClose={() => setBar(false)}>
-                  <List>
+                <Drawer
+                  variant="temper"
+                  open={bar}
+                  anchor="right"
+                  onClose={() => setBar(false)}
+                  PaperProps={{
+                    style: {
+                      backgroundColor: "black",
+                    },
+                  }}
+                >
+                  <List style={{ width: "250px", alignItems: "center" }}>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <RoomServiceIcon
+                          style={{
+                            color: "#e67e22",
+                            fontSize: "1.8rem",
+                            marginLeft: "0.5rem",
+                          }}
+                        />
+                        <ListItemText
+                          style={{
+                            color: "#e67e22",
+                            fontSize: "1.2rem",
+                            marginLeft: "0.7rem",
+                            fontWeight: 700,
+                          }}
+                        >
+                          {" "}
+                          My Restaurant
+                        </ListItemText>
+                      </ListItemIcon>
+                    </ListItemButton>
+
+                    <Divider />
                     {Listt.map((item) => {
                       return (
-                        <ListItemButton>
-                          <ListItemIcon>
-                            <ListItemText>{item}</ListItemText>
-                          </ListItemIcon>
-                        </ListItemButton>
+                        <Fragment>
+                          <ListItemButton
+                            style={{
+                              backgroundColor: "#4b4b4b",
+                              marginTop: "0.5rem",
+                            }}
+                            onClick={() => {
+                              if (item == "About Us") {
+                                navigate("/about");
+                              } else if (item == "Products") {
+                                navigate("/");
+                              } else if (item == "Contact Us") {
+                                navigate("/contact");
+                              } else if (item == "Services") {
+                                navigate("/menu");
+                              }
+                            }}
+                          >
+                            <ListItemIcon>
+                              <ListItemText
+                                style={{
+                                  color: "white",
+
+                                  fontWeight: 700,
+                                }}
+                              >
+                                {item}
+                              </ListItemText>
+                            </ListItemIcon>
+                          </ListItemButton>
+                        </Fragment>
                       );
                     })}
                   </List>
@@ -64,8 +137,13 @@ function Header() {
                 <Tabs
                   value={value}
                   onChange={(e, value) => setValue(value)}
-                  indicatorColor="secondary"
+                  TabIndicatorProps={{
+                    style: {
+                      backgroundColor: "white",
+                    },
+                  }}
                   textColor="inherit"
+                  style={{ marginLeft: "auto" }}
                 >
                   <Tab
                     label="Products"
@@ -73,7 +151,10 @@ function Header() {
                       color: "#bdc3c7",
                       fontWeight: 700,
                       fontSize: "1.1rem",
-                      marginLeft: "3rem",
+                      marginLeft: "1.2rem",
+                    }}
+                    onClick={() => {
+                      navigate("/");
                     }}
                   />
                   <Tab
@@ -82,7 +163,10 @@ function Header() {
                       color: "#bdc3c7",
                       fontWeight: 700,
                       fontSize: "1.1rem",
-                      marginLeft: "3rem",
+                      marginLeft: "1.2rem",
+                    }}
+                    onClick={() => {
+                      navigate("/menu");
                     }}
                   />
                   <Tab
@@ -91,7 +175,10 @@ function Header() {
                       color: "#bdc3c7",
                       fontWeight: 700,
                       fontSize: "1.1rem",
-                      marginLeft: "3rem",
+                      marginLeft: "1.2rem",
+                    }}
+                    onClick={() => {
+                      navigate("/contact");
                     }}
                   />
                   <Tab
@@ -100,7 +187,10 @@ function Header() {
                       color: "#bdc3c7",
                       fontWeight: 700,
                       fontSize: "1.1rem",
-                      marginLeft: "3rem",
+                      marginLeft: "1.2rem",
+                    }}
+                    onClick={() => {
+                      navigate("/about");
                     }}
                   />
                 </Tabs>
@@ -109,6 +199,7 @@ function Header() {
           </Toolbar>
         </AppBar>
       </Box>
+      <Toolbar />
     </Fragment>
   );
 }
